@@ -1,0 +1,27 @@
+{
+    "name": "nicolascard/cursophp8",
+    "description": "projeto para curso de php 8",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "sistema\\": "sistema/"
+        },
+        "files": [
+            "sistema/configuracao.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "nickdvcard",
+            "email": "naderman@naderman.de",
+            "homepage": "https://www.naderman.de",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+         "php": ">=7.4",
+        "pecee/simple-router": "dev-master",
+        "twig/twig": "^3.0"
+    }
+}
