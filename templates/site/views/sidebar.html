@@ -1,0 +1,13 @@
+<div class="col d-flex flex-column flex-shrink-0 text-dark bg-white border" >
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none w-50">
+        <span class="fs-4">Sidebar</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto w-50">
+        {% for categoria in categorias %}
+        <li class="nav-item p-0">
+            <a href="{{url('categoria/'~categoria.idCategorias)}}" class="nav-link text-dark">{{categoria.titulo}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

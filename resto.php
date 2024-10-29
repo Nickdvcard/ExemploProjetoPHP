@@ -90,10 +90,37 @@ try {
         echo $e->getMessage();
     }
     
-    echo "<br> a cleide sem"
+    echo "<br> a cleide sem";
     
     
     // $b = true;
     // echo $b
+
+////////////////////////implemnetação de select
+
+use sistema\Modelo\PostsModelo;
+
+$posts = (new PostsModelo());
+$resultados = $posts->ler();
+
+foreach($resultados as $post) {
+    echo $post->titulo."   ".$post->texto."<br>";
+}
+
+echo "<hr>";
+
+$resultadosCond = $posts->lerCond();
+
+foreach($resultadosCond as $post) {
+    echo $post->titulo."   ".$post->texto."<br>";
+}
+
+echo "<hr>";
+
+$resultadosCond = $posts->lerId(2);
+
+foreach($resultadosCond as $post) {
+    echo $post->titulo."   ".$post->texto."<br>";
+}
 
 ?>

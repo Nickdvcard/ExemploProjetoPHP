@@ -3,6 +3,8 @@
 namespace sistema\Controlador;
 
 use sistema\nucleo\Controlador;
+use sistema\Modelo\PostsModelo;
+use sistema\Modelo\CategoriasModelo;
 
 class siteControlador extends Controlador {
 
@@ -11,7 +13,57 @@ class siteControlador extends Controlador {
     }
 
     public function index(): void {
-        echo $this->template->renderizar('index.html', ['titulo' => 'teste de titulo']);
+        $posts = (new PostsModelo());
+        $resultadosSelect = $posts->ler();
+                
+        $categorias = (new CategoriasModelo());
+        $resultadosSelect2 = $categorias->ler();
+
+        echo $this->template->renderizar('index.html', [
+            "posts" => $resultadosSelect,
+            "categorias" => $resultadosSelect2
+        ]);
+    }
+
+    public function post(int $id): void {
+        $posts = (new PostsModelo());
+        $resultadosSelect = $posts->lerId($id);
+
+        if(!$resultadosSelect) {
+            $this->erro404();
+        }
+
+        $categorias = (new CategoriasModelo());
+        $resultadosSelect2 = $categorias->ler();
+
+        //var_dump($resultadosSelect);
+
+        echo $this->template->renderizar('post.html', [
+            "posts" => $resultadosSelect,
+            "categorias" => $resultadosSelect2
+        ]);
+    }
+
+    public function categoria(int $id): void {
+
+        $posts = (new CategoriasModelo());
+        $resultadosSelect = $posts->posts($id);
+
+        $categorias = (new CategoriasModelo());
+        $resultadosSelect2 = $categorias->ler();
+
+        if(!$resultadosSelect) {
+            $this->erro404();
+        }
+
+        else {
+
+            echo $this->template->renderizar('categoria.html', [
+                "posts" => $resultadosSelect,
+                "categorias" => $resultadosSelect2
+            ]);
+
+        }
     }
 
     public function sobre(): void {

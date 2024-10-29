@@ -8,15 +8,15 @@ class helpers {
 
 //arquivo de funções
 
-public static function redirecionar(string $url = null): void {
-    echo "aaaaaaaaaaaaaaaaaaacccccccccaaaaaaaa";
-    header('HTTP/1.1 302 Found');
-    echo "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
-    $local = ($url ? self::url($url) : self::url());
-    echo "ccccccccccccccccccccccccccccccc";
-    header("Location: {$local}");
-    exit();
-}
+// public static function redirecionar(string $url = null): void {
+//     echo "aaaaaaaaaaaaaaaaaaacccccccccaaaaaaaa";
+//     header('HTTP/1.1 302 Found');
+//     echo "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+//     $local = ($url ? self::url($url) : self::url());
+//     echo "ccccccccccccccccccccccccccccccc";
+//     header("Location: {$local}");
+//     exit();
+// }
 
 
     public static function validarCpfBasico (string $cpf): bool {
@@ -35,7 +35,8 @@ public static function redirecionar(string $url = null): void {
     }
 
     public static function url (string $url = null): string {
-        return "url: ".$url;
+        $base = "http://localhost:3000/blog/";
+        return $base.$url;
     }
 
     public static function slug (string $slug): string {

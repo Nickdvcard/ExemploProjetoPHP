@@ -32,6 +32,12 @@ class Template {
                 new \Twig\TwigFunction('saudacao', function () {
                     return helpers::saudacao();
                 })
+            ),
+
+            $this->twig->addFunction(
+                new \Twig\TwigFunction('resumirTexto', function (string $texto, int $limite, string $continue = "...") {
+                    return helpers::resumirTexto($texto, $limite, $continue);
+                })
             )
         );
     }

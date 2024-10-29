@@ -13,6 +13,8 @@ try {
     // Defina suas rotas
     SimpleRouter::get(URL_SITE, 'siteControlador@index');
     SimpleRouter::get(URL_SITE."sobre", 'siteControlador@sobre');
+    SimpleRouter::get(URL_SITE."post/{id}", 'siteControlador@post');
+    SimpleRouter::get(URL_SITE."categoria/{id}", 'siteControlador@categoria');
     
     SimpleRouter::get(URL_SITE."404", "siteControlador@erro404");
 
