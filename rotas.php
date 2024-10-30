@@ -15,8 +15,13 @@ try {
     SimpleRouter::get(URL_SITE."sobre", 'siteControlador@sobre');
     SimpleRouter::get(URL_SITE."post/{id}", 'siteControlador@post');
     SimpleRouter::get(URL_SITE."categoria/{id}", 'siteControlador@categoria');
+    SimpleRouter::post(URL_SITE."buscar", 'siteControlador@buscar');
     
     SimpleRouter::get(URL_SITE."404", "siteControlador@erro404");
+
+    SimpleRouter::group(['namespace' => 'Admin'], function () {
+     
+    });
 
     SimpleRouter::start();
 

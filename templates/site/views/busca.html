@@ -11,34 +11,38 @@
     <body>
         {% include 'topo.html' %}
 
+
         <div class="my-5 row">
             <!-- Posts -->
-            <div class="col-md-8 d-flex flex-wrap">
-                {% for post in posts %}
-                <div class="card my-3 mx-auto" style="min-width:20rem; max-width: 38rem;">
-                    <div class="card-body">
-                        <a href="{{url('post/'~post.idPosts)}}">
-                            <h5 class="card-title">{{post.titulo}}</h5>
-                            <p class="card-text">{{resumirTexto(post.texto, 5)}}</p>
-                        </a>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+            <div class="col-md-8 d-flex flex-wrap justify-content-between">
+                {% if posts %}
+                    {% for post in posts %}
+                    <div class="card my-3" style="width: 100%; max-width: 30rem;">
+                        <div class="card-body">
+                            <a href="{{ url('post/' ~ post.idPosts) }}" class="text-decoration-none text-dark">
+                                <h5 class="card-title">{{ post.titulo }}</h5>
+                                <p class="card-text">{{ resumirTexto(post.texto, 5) }}</p>
+                            </a>
+                            <a href="#" class="btn btn-primary mt-2">Go somewhere</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="col-md-8">
+                    <div class="alert alert-danger" role="alert">
+                        Não há posts disponíveis
                     </div>
                 </div>
-                {% endfor %}
+                {% endif %}
             </div>
         
             <!-- Sidebar -->
-            {% include 'sidebar.html' %}
+            <div class="col-md-4">
+                {% include 'sidebar.html' %}
+            </div>
         </div>
         
-
-        <h1>{{titulo}}</h1>
-        <h4>{{ url("sietbacana.com") }}</h4>
-        <h4>{{ saudacao() }}</h4>
-
-        <h4> {{ "now"|date("m/d/y H:i:s") }}</h4>
-
-        {% block conteudo %} {% endblock %}
+        
 
         {% include 'rodape.html' %} 
 

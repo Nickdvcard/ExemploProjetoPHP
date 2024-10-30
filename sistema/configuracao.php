@@ -7,6 +7,7 @@
 date_default_timezone_set('America/Sao_Paulo');
 
 define('URL_SITE', 'blog/');
+define('URL_ADMIN', 'blog/admin/');
 
 define('DB_HOST', 'localhost');
 define('DB_PORTA', '3307');

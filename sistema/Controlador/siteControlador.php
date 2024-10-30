@@ -66,6 +66,25 @@ class siteControlador extends Controlador {
         }
     }
 
+    public function buscar(): void {
+        $busca = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+        if (isset($busca)) { //checa pra ver se $busca possui algo dentro de si
+            $posts = (new PostsModelo);
+            $resultadosSelect = $posts->pesquisa($busca['busca']);
+
+            //var_dump($resultadosSelect);
+        }
+
+        $categorias = (new CategoriasModelo());
+        $resultadosSelect2 = $categorias->ler();
+
+        echo $this->template->renderizar('busca.html', [
+            "posts" => $resultadosSelect,
+            "categorias" => $resultadosSelect2
+        ]);
+    }
+
     public function sobre(): void {
         echo "pagina sobre";
     }

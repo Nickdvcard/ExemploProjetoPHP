@@ -14,7 +14,7 @@ require 'rotas.php';
 use sistema\nucleo\helpers;
 use sistema\nucleo\Conexao;
 use sistema\Modelo\PostsModelo;
-
+ 
 $con = Conexao::getInstancia();
 
 

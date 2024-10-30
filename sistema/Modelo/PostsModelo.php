@@ -48,6 +48,17 @@ class PostsModelo {
         return $resultado;
     }
 
+    public function pesquisa (string $busca): array {
+        
+        $query = "SELECT * FROM Posts WHERE titulo LIKE '%{$busca}%'";
+        $stmt = Conexao::getInstancia()->query($query);
+        $resultado = $stmt->fetchAll();
+
+        //var_dump($resultado);
+
+        return $resultado;
+    }
+
 }
 
 ?>
