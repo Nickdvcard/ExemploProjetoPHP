@@ -22,7 +22,7 @@ class CategoriasModelo {
         
         $query = "SELECT * FROM Categorias WHERE idCategorias >= 2 AND status = 0";
         $stmt = Conexao::getInstancia()->query($query);
-        $resultado = $stmt->fetchAll();
+        $resultado = $stmt->fetch();
 
         //var_dump($resultado);
 
@@ -45,7 +45,7 @@ class CategoriasModelo {
 
         //var_dump($resultado);
 
-        return $resultado;
+        return $resultado; //retorna arry de objetos
     }
 
     public function posts(int $id): array {
@@ -58,6 +58,15 @@ class CategoriasModelo {
 
         return $resultado;
     }
+
+
+    public function inserir (array $dados):void {
+        
+        //echo $dados['titulo']; echo $dados['texto']; echo $dados['status'];
+        $query = "INSERT INTO `Categorias` (`titulo`, `texto`, `status`) VALUES (?, ?, ?)";       
+        $stmt = Conexao::getInstancia()->prepare($query);
+        $stmt->execute([$dados['titulo'], $dados['texto'], $dados['status']]);
+      }
 
 }
 

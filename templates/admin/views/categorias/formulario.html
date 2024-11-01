@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block corpo %}
+
+<div class="card my-3 me-8" style="min-width:20rem; max-width: 38rem; margin-left: 25px">
+    <div class="card-body">
+        
+     <form action="{{url('admin/categorias/cadastrar')}}" method="post">
+        <div>
+        <h1>CATEGORIAS</h1>
+        </div>
+        <div class="form-group">
+            <label for="titulo">Titulo</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" aria-describedby="tituloHelp" placeholder="Titulo" value="{{categoria.titulo}}" required>
+            <small id="tituloHelp" class="form-text text-muted">Esse é o titulo</small>
+        </div>
+        <div class="form-group">
+            <label for="texto">Texto</label>
+            <input type="text" class="form-control" id="texto" value="{{categoria.texto}}" name="texto" aria-describedby="textoHelp" placeholder="Texto" required>
+            <small id="textoHelp" class="form-text text-muted">Esse é o texto</small>
+        </div>
+        <div class="form-group">
+            <label for="statusSelect" class="form-label">Selecione o Status</label>
+            <select id="statusSelect" name="status" class="form-select" aria-label="Default select example" required>
+                <option selected disabled>Abra este menu de seleção</option>
+                <option value="1">Ativo</option>
+                <option value="0">Inativo</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+     </form>
+    </div>
+</div>
+
+{% endblock %}

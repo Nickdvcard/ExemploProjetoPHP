@@ -4,6 +4,7 @@
 require 'vendor/autoload.php';
 
 use Pecee\SimpleRouter\SimpleRouter;
+use sistema\Controlador\Admin\AdminDashboardControlador;
 use sistema\Controlador\siteControlador;
 use sistema\nucleo\helpers;
 
@@ -20,7 +21,18 @@ try {
     SimpleRouter::get(URL_SITE."404", "siteControlador@erro404");
 
     SimpleRouter::group(['namespace' => 'Admin'], function () {
-     
+        SimpleRouter::get(URL_ADMIN."dashboard", 'AdminDashboardControlador@dashboard');
+
+        SimpleRouter::get(URL_ADMIN."posts/listar", 'AdminPostsControlador@listar');
+        SimpleRouter::match(['get', 'post'], URL_ADMIN."posts/cadastrar", 'AdminPostsControlador@cadastrar');
+        SimpleRouter::match(['get', 'post'], URL_ADMIN."posts/editar/{id}", 'AdminPostsControlador@editar');
+
+
+
+        SimpleRouter::get(URL_ADMIN."categorias/listar", 'AdminCategoriasControlador@listar');
+        SimpleRouter::match(['get', 'post'], URL_ADMIN."categorias/cadastrar", 'AdminCategoriasControlador@cadastrar');
+        SimpleRouter::match(['get', 'post'], URL_ADMIN."categorias/editar/{id}", 'AdminCategoriasControlador@editar');
+
     });
 
     SimpleRouter::start();

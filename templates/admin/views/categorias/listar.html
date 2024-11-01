@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block corpo %}
+
+<div class="card my-3 me-8" style="min-width:20rem; max-width: 38rem; margin-left: 25px">
+    <div class="card-body">
+        <button type="button" class="btn btn-primary">Cadastrar</button>
+
+        <div class="table-responsive">
+            <table class="table table-stripped">
+                <thead class="text-center">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" class="w-50">titulo</th>
+                    <th scope="col">Ação</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for categoria in categorias %}
+                <tr class="text-center">
+                    <th scope="row">{{categoria.idCategorias}}</th>
+                    <td class="w-75 text-start">{{categoria.titulo}}</td>
+                    <td>
+                        <a href="{{ url('admin/categorias/editar/'~categoria.idCategorias) }}">Editar</a>
+                    </td>
+                    <td>
+                        {% if categoria.status == 1 %}
+                        Ativo
+                        {% else %}
+                        Inativo
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

@@ -59,6 +59,14 @@ class PostsModelo {
         return $resultado;
     }
 
+    public function inserir (array $dados):void {
+        
+        //echo $dados['titulo']; echo $dados['texto']; echo $dados['status'];
+        $query = "INSERT INTO `Posts` (`titulo`, `texto`, `status`, `categorias_id`) VALUES (?, ?, ?, ?)";       
+        $stmt = Conexao::getInstancia()->prepare($query);
+        $stmt->execute([$dados['titulo'], $dados['texto'], $dados['status'], $dados['categoria']]);
+      }
+
 }
 
 ?>
