@@ -5,7 +5,9 @@
 <div class="card my-3 me-8" style="min-width:20rem; max-width: 38rem; margin-left: 25px">
     <div class="card-body">
         
-     <form action="{{url('admin/categorias/cadastrar')}}" method="post">
+     <form action="{% if categoria.idCategorias %} {{url('admin/categorias/editar/'~categoria.idCategorias)}}
+                   {% else %} {{url('admin/categorias/cadastrar')}}
+                   {% endif %}" method="post">
         <div>
         <h1>CATEGORIAS</h1>
         </div>
@@ -23,11 +25,17 @@
             <label for="statusSelect" class="form-label">Selecione o Status</label>
             <select id="statusSelect" name="status" class="form-select" aria-label="Default select example" required>
                 <option selected disabled>Abra este menu de seleção</option>
-                <option value="1">Ativo</option>
-                <option value="0">Inativo</option>
+                <option value="1" {% if categoria.status == '1' %} selected {% endif %}>Ativo</option>
+                <option value="0" {% if categoria.status == '0' %} selected {% endif %}>Inativo</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">
+            {% if categoria.idCategorias %}
+            Atualizar
+            {% else %}
+            Cadastrar
+            {% endif %}
+        </button>
      </form>
     </div>
 </div>

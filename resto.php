@@ -123,4 +123,22 @@ foreach($resultadosCond as $post) {
     echo $post->titulo."   ".$post->texto."<br>";
 }
 
+////////////////////////////////////////////sessao
+
+session_start();
+echo session_id()."<br>";
+echo session_name();
+
+echo "<hr>";
+
+$_SESSION['nome'] = "Nicolas Cardoso";
+
+if (isset($_SESSION['visitas'])) {
+    $_SESSION['visitas'] += 1;
+} else {
+    $_SESSION['visitas'] = 1;
+}
+
+echo "{$_SESSION["nome"]} visitou {$_SESSION["visitas"]} vezes"
+
 ?>

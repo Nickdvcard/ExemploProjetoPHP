@@ -12,16 +12,24 @@ class AdminCategoriasControlador extends AdminControlador{
 
         $categorias = (new CategoriasModelo);
         $resultados = $categorias->ler();
+        $total = $categorias->total();
+        $ativos = $categorias->countEspecializado("status = 1");
+        $inativos = $categorias->countEspecializado("status = 0");
 
       echo $this->template->renderizar('categorias/listar.html', [
-        "categorias" => $resultados
+        "categorias" => $resultados,
+        "total" => [
+          'total' => $total,
+          'ativos' => $ativos,
+          'inativos' => $inativos
+        ]
       ]);
     }
 
     public function cadastrar():void {
 
     $dadosForm = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-    var_dump($dadosForm);
+    //var_dump($dadosForm);
 
     if(isset($dadosForm)) {
       $cat = (new CategoriasModelo);
@@ -37,12 +45,31 @@ class AdminCategoriasControlador extends AdminControlador{
     $cat = (new CategoriasModelo())->lerId($id);
     $resulatdo = $cat[0];
 
-    var_dump($resulatdo);
+    //var_dump($resulatdo);
+
+    $dadosForm = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    var_dump($dadosForm);
+
+    if(isset($dadosForm)) {
+      $cat = (new CategoriasModelo); 
+      $cat->atualizar($dadosForm, $id);
+      header("Location: /".URL_ADMIN."categorias/listar"); // Altere o caminho para a URL correta
+      exit; // Certifique-se de sair após o redirecionamento
+    }
 
     echo $this->template->renderizar('categorias/formulario.html', [
       "categoria" => $resulatdo
     ]);
   }
+
+  public function deletar(int $id):void {
+    $cat = (new CategoriasModelo());
+    $cat->deletar($id);
+    header("Location: /".URL_ADMIN."categorias/listar"); // Altere o caminho para a URL correta
+    exit; // Certifique-se de sair após o redirecionamento
+  }
+
+  
 }
 
 ?>

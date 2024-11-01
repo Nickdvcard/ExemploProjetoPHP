@@ -12,9 +12,17 @@ class AdminPostsControlador extends AdminControlador{
 
         $posts = (new PostsModelo);
         $resultados = $posts->ler();
+        $total = $posts->total();
+        $ativos = $posts->countEspecializado("status = 1");
+        $inativos = $posts->countEspecializado("status = 0");
 
       echo $this->template->renderizar('posts/listar.html', [
-        "posts" => $resultados
+        "posts" => $resultados,
+        "total" => [
+          'total' => $total,
+          'ativos' => $ativos,
+          'inativos' => $inativos
+        ]
       ]);
     }
 
@@ -39,13 +47,31 @@ class AdminPostsControlador extends AdminControlador{
             
         $post = (new PostsModelo());
         $post = $post->lerId($id);
-        //var_dump($cat);
+        $resultado = $post[0];
+
+
+        $dadosForm = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        //var_dump($dadosForm);
+    
+        if(isset($dadosForm)) {
+          $post = (new PostsModelo);
+          $post->atualizar($dadosForm, $id);
+          header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
+          exit; // Certifique-se de sair após o redirecionamento
+        }
         
         echo $this->template->renderizar('posts/formulario.html', [
-            "post" => $post,
+            "post" => $resultado,
             "categorias" => (new CategoriasModelo)->ler()
         ]);
     }
+
+    public function deletar(int $id):void {
+      $post = (new PostsModelo());
+      $post->deletar($id);
+      header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
+      exit; // Certifique-se de sair após o redirecionamento
+  }
 
 }
 

@@ -4,36 +4,44 @@
 
 <div class="card my-3 me-8" style="min-width:20rem; max-width: 38rem; margin-left: 25px">
     <div class="card-body">
-     <form action="{{url('admin/posts/cadastrar')}}" method="post">
+     <form action="{% if post.idPosts %} {{url('admin/posts/editar/'~post.idPosts)}}
+                   {% else %} {{url('admin/posts/cadastrar')}}
+                   {% endif %}" method="post">
         <h1>POSTS</h1>
-        <div class="form-group">
+        <div class="form-group my-2">
             <label for="titulo">Titulo</label>
-            <input type="text" class="form-control" id="titulo" name="titulo" aria-describedby="tituloHelp" placeholder="Titulo" required>
+            <input type="text" class="form-control" id="titulo" value="{{post.titulo}}" name="titulo" aria-describedby="tituloHelp" placeholder="Titulo" required>
             <small id="tituloHelp" class="form-text text-muted">Esse é o titulo</small>
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
             <label for="texto">Texto</label>
-            <input type="text" class="form-control" id="texto" name="texto" aria-describedby="textoHelp" placeholder="Texto" required>
+            <input type="text" class="form-control" id="texto" value="{{post.texto}}" name="texto" aria-describedby="textoHelp" placeholder="Texto" required>
             <small id="textoHelp" class="form-text text-muted">Esse é o texto</small>
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
             <label for="statusSelect" class="form-label">Selecione o Status</label>
             <select id="statusSelect" name="status" class="form-select" aria-label="Default select example" required>
                 <option selected disabled>Abra este menu de seleção</option>
-                <option value="1">Ativo</option>
-                <option value="0">Inativo</option>
+                <option value="1" {% if post.status == '1' %} selected {% endif %}>Ativo</option>
+                <option value="0" {% if post.status == '0' %} selected {% endif %}>Inativo</option>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
             <label for="statusSelect" class="form-label">Selecione a categoria</label>
             <select id="statusSelect" name="categoria" class="form-select" aria-label="Default select example" required>
                 <option selected disabled>Abra este menu de seleção</option>
                 {% for categoria in categorias %}
-                <option value="{{categoria.idCategorias}}">{{categoria.titulo}}</option>
+                <option value="{{categoria.idCategorias}}" {% if post.categorias_id == categoria.idCategorias %} selected {% endif %}>{{categoria.titulo}}</option>
                 {% endfor %}
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary my-2">
+            {% if post.idPosts %}
+            Atualizar
+            {% else %}
+            Cadastrar
+            {% endif %}
+        </button>
      </form>
     </div>
 </div>

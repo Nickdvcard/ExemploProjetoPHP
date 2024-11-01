@@ -26,12 +26,14 @@ try {
         SimpleRouter::get(URL_ADMIN."posts/listar", 'AdminPostsControlador@listar');
         SimpleRouter::match(['get', 'post'], URL_ADMIN."posts/cadastrar", 'AdminPostsControlador@cadastrar');
         SimpleRouter::match(['get', 'post'], URL_ADMIN."posts/editar/{id}", 'AdminPostsControlador@editar');
-
+        SimpleRouter::get(URL_ADMIN."posts/deletar/{id}", 'AdminPostsControlador@deletar');
 
 
         SimpleRouter::get(URL_ADMIN."categorias/listar", 'AdminCategoriasControlador@listar');
         SimpleRouter::match(['get', 'post'], URL_ADMIN."categorias/cadastrar", 'AdminCategoriasControlador@cadastrar');
         SimpleRouter::match(['get', 'post'], URL_ADMIN."categorias/editar/{id}", 'AdminCategoriasControlador@editar');
+        SimpleRouter::get(URL_ADMIN."categorias/deletar/{id}", 'AdminCategoriasControlador@deletar');
+
 
     });
 
