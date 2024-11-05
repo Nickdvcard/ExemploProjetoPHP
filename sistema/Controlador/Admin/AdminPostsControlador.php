@@ -9,9 +9,9 @@ use sistema\Modelo\PostsModelo;
 class AdminPostsControlador extends AdminControlador{
     
     public function listar():void {
-
         $posts = (new PostsModelo);
-        $resultados = $posts->ler();
+        $resultados = $posts->lerId(null, "idPosts DESC"); 
+        //$resultados = $posts->ler2()->ordem("idPosts DESC")->resultado2(true); //indica que é pra buscar todos os resultados
         $total = $posts->total();
         $ativos = $posts->countEspecializado("status = 1");
         $inativos = $posts->countEspecializado("status = 0");
@@ -30,13 +30,30 @@ class AdminPostsControlador extends AdminControlador{
 
         $dadosForm = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         var_dump($dadosForm);
-    
+
         if(isset($dadosForm)) {
           $post = (new PostsModelo);
-          $post->inserir($dadosForm);
+
+          $post->titulo = $dadosForm['titulo'];
+          $post->texto = $dadosForm['texto'];
+          $post->status = $dadosForm['status'];
+          $post->categorias_id = $dadosForm['categoria'];
           header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
-          exit; // Certifique-se de sair após o redirecionamento
-        }
+
+          if ($post->salvar()) {
+            $this->mensagem->sucesso("post cadstrado com sucesso")->flash();
+            header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
+
+          }
+        } 
+    
+        // if(isset($dadosForm)) {
+        //   $post = (new PostsModelo);
+        //   $this->mensagem->sucesso("post cadstrado com sucesso")->flash();
+        //   $post->inserir($dadosForm);
+        //   header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
+        //   exit; // Certifique-se de sair após o redirecionamento
+        // }
         
         echo $this->template->renderizar('posts/formulario.html', [
             "categorias" => (new CategoriasModelo)->ler()
@@ -52,6 +69,21 @@ class AdminPostsControlador extends AdminControlador{
 
         $dadosForm = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         //var_dump($dadosForm);
+
+        // if(isset($dadosForm)) {
+        //   $post = (new PostsModelo())->lerId2($id);
+
+        //   $post->titulo = $dadosForm['titulo'];
+        //   $post->texto = $dadosForm['texto'];
+        //   $post->status = $dadosForm['status'];
+        //   $post->categorias_id = $dadosForm['categoria'];
+
+        //   if ($post->salvar()) {
+        //     $this->mensagem->sucesso("post atualizado com sucesso")->flash();
+        //     header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
+
+        //   }
+        // } 
     
         if(isset($dadosForm)) {
           $post = (new PostsModelo);
@@ -68,7 +100,8 @@ class AdminPostsControlador extends AdminControlador{
 
     public function deletar(int $id):void {
       $post = (new PostsModelo());
-      $post->deletar($id);
+      $post->apagar2("idPosts = {$id}");
+      //$post->deletar($id);
       header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
       exit; // Certifique-se de sair após o redirecionamento
   }

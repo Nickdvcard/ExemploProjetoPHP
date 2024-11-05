@@ -5,6 +5,8 @@
 require 'sistema/configuracao.php';
 include 'helpers.php';
 
+use sistema\nucleo\Sessao;
+
 // /*
 echo 'oioioioi!!!';
 echo "<h1>oioioioi!!!</h1>";
@@ -72,7 +74,7 @@ use sistema\nucleo\mensagem;
 
 $msg = new mensagem("Texto para ser estilizado", "color: red; background-color: green; border-style: solid; border-color: red;");
 echo $msg;
-echo $msg->style();
+echo $msg->renderizar();
 
 
 $helper = new helpers();
@@ -139,6 +141,31 @@ if (isset($_SESSION['visitas'])) {
     $_SESSION['visitas'] = 1;
 }
 
-echo "{$_SESSION["nome"]} visitou {$_SESSION["visitas"]} vezes"
+echo "{$_SESSION["nome"]} visitou {$_SESSION["visitas"]} vezes";
+
+$sessao = new Sessao;
+$sessao->criar("nome", "Nicolas");
+
+var_dump($sessao->carregar());
+echo "<br>";
+var_dump($sessao->carregar()->usuario);
+echo "<br>";
+var_dump($sessao->carregar()->nome);
+echo "<br>";
+var_dump($sessao->carregar()->visitas);
+
+var_dump($sessao->checar('visitas'));
+
+echo "<br>";echo "<br>";echo "<br>";
+var_dump($sessao->checar('usuario'));
+echo "<br>";
+var_dump($sessao->carregar()->usuario);
+echo "<br>";
+$sessao->limpar("usuario"); //nao da echo em nada
+echo "<br>";
+var_dump($sessao->checar('usuario'));
+var_dump($sessao->carregar()->usuario);
+
+var_dump($sessao->checar('nome'));
 
 ?>

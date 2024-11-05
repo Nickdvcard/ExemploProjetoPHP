@@ -3,6 +3,7 @@
 namespace sistema\nucleo;
 
 use Exception;
+use sistema\nucleo\Sessao;
 
 class helpers {
 
@@ -17,6 +18,16 @@ class helpers {
 //     header("Location: {$local}");
 //     exit();
 // }
+
+    public static function flash(): ?string {
+        $sessao = new Sessao();
+
+        if($flash = $sessao->flash()) {
+            echo $flash;
+        }
+
+        return null;
+    }
 
 
     public static function validarCpfBasico (string $cpf): bool {

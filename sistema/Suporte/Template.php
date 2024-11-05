@@ -38,6 +38,13 @@ class Template {
                 new \Twig\TwigFunction('resumirTexto', function (string $texto, int $limite, string $continue = "...") {
                     return helpers::resumirTexto($texto, $limite, $continue);
                 })
+            ),
+
+
+            $this->twig->addFunction(
+                new \Twig\TwigFunction('flash', function () {
+                    return helpers::flash();
+                })
             )
         );
     }

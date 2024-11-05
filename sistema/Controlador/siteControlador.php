@@ -27,7 +27,7 @@ class siteControlador extends Controlador {
 
     public function post(int $id): void {
         $posts = (new PostsModelo());
-        $resultadosSelect = $posts->lerId($id);
+        $resultadosSelect = $posts->lerId($id, "titulo ASC"); //na tela de mostrar posts por categoria funcioa
 
         if(!$resultadosSelect) {
             $this->erro404();
@@ -72,6 +72,7 @@ class siteControlador extends Controlador {
         if (isset($busca)) { //checa pra ver se $busca possui algo dentro de si
             $posts = (new PostsModelo);
             $resultadosSelect = $posts->pesquisa($busca['busca']);
+            //$resultadosSelect = $posts->ler2("titulo like %{$busca['busca']}%")->resultado2(true);
 
             //var_dump($resultadosSelect);
         }

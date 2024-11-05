@@ -3,8 +3,13 @@
 namespace sistema\Modelo;
 
 use sistema\nucleo\Conexao; 
+use sistema\nucleo\Modelo;
 
-class PostsModelo {
+class PostsModelo extends Modelo {
+
+    public function __construct() {
+        parent::__construct('Posts');
+    }
      
     public function ler (): array {
         
@@ -29,7 +34,7 @@ class PostsModelo {
         return $resultado;
     }   
 
-    public function lerId (int $id = null): array {
+    public function lerId (int $id = null, string $ordem = null): array {
 
         if ($id != null) {
             $where = "WHERE idPosts = {$id}";
@@ -39,7 +44,18 @@ class PostsModelo {
             $where = "";
         }
 
-        $query = "SELECT * FROM Posts {$where}";
+        if ($ordem != null) {
+            $where2 = "ORDER BY {$ordem}";
+        }
+
+        else {
+            $where2 = "";
+        }
+
+        // var_dump($where2);
+        // var_dump($ordem);
+
+        $query = "SELECT * FROM Posts {$where} {$where2}";
         $stmt = Conexao::getInstancia()->query($query);
         $resultado = $stmt->fetchAll();
 
