@@ -22,6 +22,8 @@ try {
 
     SimpleRouter::group(['namespace' => 'Admin'], function () {
         SimpleRouter::get(URL_ADMIN."dashboard", 'AdminDashboardControlador@dashboard');
+        SimpleRouter::match(['get', 'post'], URL_ADMIN."login", 'AdminLoginControlador@login');
+
 
         SimpleRouter::get(URL_ADMIN."posts/listar", 'AdminPostsControlador@listar');
         SimpleRouter::match(['get', 'post'], URL_ADMIN."posts/cadastrar", 'AdminPostsControlador@cadastrar');

@@ -6,7 +6,7 @@ use PDOException;
 use sistema\nucleo\Conexao;
 use sistema\nucleo\mensagem;
 
-class modelo {
+ abstract class modelo {
 
     protected $dados;
     protected $query;
@@ -92,7 +92,7 @@ class modelo {
             $stmt = Conexao::getInstancia()->prepare($this->query.$this->ordem);
             $stmt->execute($this->parametros);
 
-            if (!$stmt->fetchColumn()) {
+            if (!$stmt->rowCount()) {
                 return null;
             }
 
@@ -201,17 +201,17 @@ class modelo {
         if(empty($this->id)) {
             $id = $this->cadastrar2($this->armazenar());
             if($this->erro) {
-                $this->mensagem->sucesso("erro ao cadastrar");
+                $this->mensagem->sucesso("erro ao cadastrar")->flash();
                 return false;
             }
         }
 
         //atualizar
-        if(empty($this->id)) {
+        if(!empty($this->id)) {
             $id = $this->id;
             $this->atualizar2($this->armazenar(), "id = {$id}");
             if($this->erro) {
-                $this->mensagem->sucesso("erro ao atualizar");
+                $this->mensagem->sucesso("erro ao atualizar")->flash();
                 return false;
             }
         }
@@ -227,7 +227,7 @@ class modelo {
         
         //var_dump($stmt->fetchColumn());
 
-        return $stmt->fetchColumn();
+        return $stmt->rowCount();
     }
 
 

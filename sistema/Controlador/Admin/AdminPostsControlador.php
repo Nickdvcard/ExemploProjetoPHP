@@ -13,8 +13,10 @@ class AdminPostsControlador extends AdminControlador{
         $resultados = $posts->lerId(null, "idPosts DESC"); 
         //$resultados = $posts->ler2()->ordem("idPosts DESC")->resultado2(true); //indica que é pra buscar todos os resultados
         $total = $posts->total();
-        $ativos = $posts->countEspecializado("status = 1");
-        $inativos = $posts->countEspecializado("status = 0");
+        // $ativos = $posts->countEspecializado("status = 1");
+        // $inativos = $posts->countEspecializado("status = 0");
+        $ativos = $posts->ler2("status = 1")->total2();
+        $inativos = $posts->ler2("status = 0")->total2();
 
       echo $this->template->renderizar('posts/listar.html', [
         "posts" => $resultados,
@@ -99,11 +101,28 @@ class AdminPostsControlador extends AdminControlador{
     }
 
     public function deletar(int $id):void {
-      $post = (new PostsModelo());
-      $post->apagar2("idPosts = {$id}");
+
+      if(is_int($id)) {
+        $post = (new PostsModelo())->lerId2($id);
+
+        if(!$post) {
+          $this->mensagem->sucesso("Deu ruim")->flash();
+        }
+
+        else {
+          $post->apagar2("idPosts = {$id}");
+          $this->mensagem->sucesso("Deu bom")->flash();
+
+          header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
+          exit; // Certifique-se de sair após o redirecionamento
+        }
+      }
+
+      //$post = (new PostsModelo());
+      //$post->apagar2("idPosts = {$id}");
       //$post->deletar($id);
-      header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
-      exit; // Certifique-se de sair após o redirecionamento
+      // header("Location: /".URL_ADMIN."posts/listar"); // Altere o caminho para a URL correta
+      // exit; // Certifique-se de sair após o redirecionamento
   }
 
 }
